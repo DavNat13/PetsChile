@@ -1,6 +1,6 @@
 # Proyecto E-commerce: PetsChile
 
-![PetsChile Logo](https://via.placeholder.com/150) PetsChile es una plataforma de comercio electrónico desarrollada como proyecto para el curso DSY1104. El sistema simula una tienda en línea de productos para mascotas, implementando funcionalidades tanto para clientes como para administradores.
+PetsChile es una plataforma de comercio electrónico desarrollada como proyecto para el curso DSY1104. El sistema simula una tienda en línea de productos para mascotas, implementando funcionalidades tanto para clientes como para administradores.
 
 ## Características Principales
 
