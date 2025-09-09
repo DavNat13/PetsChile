@@ -1,0 +1,255 @@
+/* =======================================
+   Admin: Layout Principal del Panel
+   ======================================= */
+
+.admin-dashboard {
+    display: flex;
+    min-height: 100vh;
+    background-color: var(--background-color);
+}
+
+/* --- Barra Lateral (Sidebar) --- */
+.admin-sidebar {
+    width: 250px;
+    background-color: #ffffff;
+    border-right: 1px solid var(--border-color);
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+}
+
+.sidebar-header {
+    padding: 1.5rem;
+    text-align: center;
+    border-bottom: 1px solid var(--border-color);
+}
+.sidebar-header h3 {
+    color: var(--primary-color);
+    margin: 0;
+    font-size: 1.5rem;
+}
+.sidebar-header p {
+    margin: 0.25rem 0 0;
+    font-size: 0.85rem;
+    color: var(--light-text-color);
+}
+
+.sidebar-nav ul {
+    list-style: none;
+    padding: 1rem 0;
+    margin: 0;
+}
+.sidebar-nav a {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.9rem 1.5rem;
+    color: var(--text-color);
+    text-decoration: none;
+    font-weight: 500;
+    border-left: 4px solid transparent;
+    transition: all 0.2s ease;
+}
+.sidebar-nav a:hover {
+    background-color: var(--background-color);
+    color: var(--primary-color);
+}
+.sidebar-nav a.active {
+    background-color: rgba(46, 139, 87, 0.1);
+    color: var(--primary-color);
+    font-weight: 600;
+    border-left-color: var(--primary-color);
+}
+.sidebar-nav a i {
+    width: 20px;
+    text-align: center;
+}
+
+/* --- Área de Contenido Principal --- */
+.admin-content {
+    flex-grow: 1;
+    padding: 2.5rem;
+    overflow-y: auto;
+}
+
+.admin-header {
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--border-color);
+    margin-bottom: 2.5rem;
+}
+.admin-header h1 {
+    font-size: 2rem;
+    margin: 0;
+}
+.admin-header p {
+    font-size: 1rem;
+    color: var(--light-text-color);
+    margin: 0.5rem 0 0;
+}
+
+/* --- Contenedor tipo Tarjeta --- */
+.card-container {
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+    padding: 2rem;
+    border: 1px solid var(--border-color);
+    margin-bottom: 2rem;
+}
+.card-container h2 {
+    color: var(--text-color);
+    margin-top: 0;
+    font-size: 1.4rem;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+/* --- Barra de Controles (Búsqueda y Filtros) --- */
+.controls-bar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    align-items: center;
+    justify-content: space-between;
+}
+.search-bar {
+    position: relative;
+    flex-grow: 1;
+    min-width: 250px;
+}
+.search-bar input {
+    width: 100%;
+    padding: 10px 15px 10px 40px;
+    border: 1.5px solid var(--border-color);
+    border-radius: 25px;
+}
+.search-bar i {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #aaa;
+}
+.filters {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+/* --- Estilos del Modal (Genérico para Admin) --- */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    display: none; /* Se cambia a flex con JS */
+    align-items: center;
+    justify-content: center;
+    z-index: 2000;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+.modal-content {
+    background-color: #fff;
+    border-radius: 12px;
+    width: 90%;
+    max-width: 650px;
+    max-height: 90vh;
+    display: flex;
+    flex-direction: column;
+    transform: scale(0.95);
+    transition: transform 0.3s ease;
+}
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid var(--border-color);
+}
+.modal-header h2 {
+    margin: 0;
+    font-size: 1.5rem;
+}
+.close-btn {
+    background: none; border: none; font-size: 2rem; cursor: pointer; color: #aaa;
+}
+.modal-body {
+    padding: 1.5rem;
+    overflow-y: auto;
+}
+.modal-footer {
+    padding: 1rem 1.5rem;
+    border-top: 1px solid var(--border-color);
+    text-align: right;
+    background-color: #f8f9fa;
+}
+
+/* --- Formularios del Admin --- */
+.admin-content .form-group { margin-bottom: 1.5rem; }
+.admin-content .form-group label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+.admin-content .form-group input,
+.admin-content .form-group textarea,
+.admin-content .form-group select {
+    width: 100%;
+}
+.admin-content .form-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+}
+
+/* --- Estilos para las Tarjetas de Estadísticas del Dashboard --- */
+.stat-cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2.5rem;
+}
+
+.stat-card {
+    background-color: #fff;
+    border-radius: 12px;
+    padding: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    border: 1px solid var(--border-color);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+}
+
+.stat-card .stat-icon {
+    font-size: 2rem;
+    color: var(--primary-color);
+    background-color: rgba(46, 139, 87, 0.1);
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.stat-card .stat-info p {
+    margin: 0;
+    color: var(--light-text-color);
+    font-size: 0.9rem;
+}
+
+.stat-card .stat-info h3 {
+    margin: 0.25rem 0 0;
+    font-size: 1.75rem;
+    color: var(--text-color);
+}
+/* --- Estilo para el botón de eliminar en las tablas del admin --- */
+.action-btn.btn-delete:hover {
+    color: var(--danger-color, #dc3545);
+}

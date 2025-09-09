@@ -1,0 +1,122 @@
+/* =========================
+   Componente: Botones (Adaptado a tus clases existentes)
+   ========================= */
+
+/* --- Estilo Base Compartido para tus Botones Principales --- */
+.btn-submit,
+.btn-checkout,
+.hero-btn,
+.btn-primary,
+.btn-primary-alt,
+.btn-secondary-sm {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.8rem 1.8rem;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 1rem;
+    text-decoration: none;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: all var(--transition);
+    white-space: nowrap;
+    text-align: center;
+}
+
+.btn-submit:hover:not(:disabled),
+.btn-checkout:hover:not(:disabled),
+.hero-btn:hover:not(:disabled),
+.btn-primary:hover:not(:disabled),
+.btn-primary-alt:hover:not(:disabled),
+.btn-secondary-sm:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.btn-submit:disabled,
+.btn-checkout:disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+    background-color: #ccc;
+}
+
+/* --- Variaciones de Color (Aplicadas a tus clases) --- */
+
+/* Botones con fondo primario (verde) */
+.btn-submit,
+.btn-checkout,
+.hero-btn,
+.btn-primary,
+.btn-primary-alt,
+.btn-secondary-sm {
+    background-color: var(--primary-color);
+    color: #fff;
+    border-color: var(--primary-color);
+}
+
+/* Hover para botones primarios */
+.btn-submit:hover:not(:disabled),
+.btn-checkout:hover:not(:disabled),
+.hero-btn:hover:not(:disabled),
+.btn-primary:hover:not(:disabled),
+.btn-primary-alt:hover:not(:disabled),
+.btn-secondary-sm:hover:not(:disabled) {
+    background-color: var(--secondary-color);
+    border-color: var(--secondary-color);
+    color: var(--text-color);
+}
+
+
+/* --- Botones Específicos del Carrito --- */
+.btn-clear-cart {
+     width: 100%;
+     background: none;
+     border: 1px solid var(--border-color);
+     color: var(--light-text-color);
+     padding: 0.75rem;
+     border-radius: 8px;
+     cursor: pointer;
+     font-weight: 500;
+     transition: all var(--transition);
+     margin-top: 0.5rem;
+}
+.btn-clear-cart:hover {
+    background-color: var(--danger-color);
+    border-color: var(--danger-color);
+    color: #fff;
+}
+
+
+/* --- Botones de Acción (Panel de Admin) --- */
+.action-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    margin: 0 5px;
+    font-size: 1.1rem;
+    padding: 8px;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    transition: all var(--transition);
+}
+
+.action-btn:hover {
+    background-color: #f0f0f0;
+}
+
+.action-btn i {
+    transition: transform 0.2s ease;
+}
+
+.action-btn:hover i {
+    transform: scale(1.2);
+}
+
+/* Colores de los íconos de acción */
+.btn-edit i { color: var(--primary-color); }
+.btn-delete i { color: var(--danger-color); }
+
+

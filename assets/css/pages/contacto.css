@@ -1,0 +1,144 @@
+/* =========================
+   Página: Contacto
+   ========================= */
+
+.main-contacto {
+    padding: 3rem 1.5rem;
+}
+
+.contacto-section {
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+.contacto-title {
+    text-align: center;
+    margin-top: 0;
+    margin-bottom: 3rem;
+}
+
+.contacto-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2.5rem;
+    align-items: flex-start;
+}
+
+.contacto-form-container {
+    background-color: #fff;
+    color: var(--primary-color);
+    font-size: 1rem;
+    font-weight: 500;
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 2.5rem;
+    
+    box-shadow: 0 4px 16px rgba(46, 139, 87, 0.1);
+}
+
+/* Usamos las clases de _auth.css para consistencia */
+.contacto-form .form-group {
+    margin-bottom: 1.2rem;
+}
+
+.contacto-form .btn-submit {
+    width: 100%;
+    margin-top: 1rem;
+}
+
+.form-feedback {
+    margin-top: 1rem;
+    padding: 0.8rem;
+    border-radius: 8px;
+    text-align: center;
+    font-weight: 500;
+    display: none; /* Se muestra con JS */
+}
+.form-feedback.success {
+    display: block;
+    background-color: rgba(46, 139, 87, 0.1);
+    color: var(--primary-color);
+}
+.form-feedback.error {
+    display: block;
+    background-color: rgba(217, 83, 79, 0.1);
+    color: var(--danger-color);
+}
+
+.contacto-details {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.contacto-info {
+    background-color: #fff;
+    border-radius: 12px;
+    padding: 2rem;
+    box-shadow: 0 4px 16px rgba(46, 139, 87, 0.1);
+}
+
+.contacto-info h2,
+.contacto-mapa h2 {
+    margin-top: 0;
+    margin-bottom: 1.5rem;
+    font-size: 1.4rem;
+    color: var(--primary-color);
+}
+
+.contacto-info ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.contacto-info li {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    color: var(--text-color);
+}
+
+.contacto-info i {
+    color: var(--primary-color);
+    font-size: 1.2rem;
+    margin-top: 0.2rem;
+    width: 20px;
+    text-align: center;
+}
+
+.contacto-info a {
+    color: var(--primary-color);
+    text-decoration: none;
+    font-weight: 500;
+}
+.contacto-info a:hover {
+    text-decoration: underline;
+}
+
+.contacto-mapa {
+    background-color: #fff;
+    border-radius: 12px;
+    padding: 2rem;
+    box-shadow: 0 4px 16px rgba(46, 139, 87, 0.1);
+}
+
+.mapa-container {
+    overflow: hidden;
+    border-radius: 8px;
+    aspect-ratio: 16 / 9; /* Mantiene la proporción del mapa */
+}
+
+.mapa-container iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+}
+
+/* Responsive */
+@media (max-width: 992px) {
+    .contacto-content {
+        grid-template-columns: 1fr;
+    }
+}

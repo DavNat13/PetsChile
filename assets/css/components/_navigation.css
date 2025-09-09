@@ -1,0 +1,209 @@
+/* =========================
+   Componente: Navegación Principal
+   ========================= */
+
+.main-nav {
+    background-color: var(--nav-bg);
+    box-shadow: var(--nav-shadow);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    width: 100%;
+}
+
+.nav-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0.75rem 1.5rem;
+}
+
+/* Logo */
+.nav-logo {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    gap: 12px;
+}
+
+.logo-img {
+    width: 45px;
+    height: 45px;
+    object-fit: contain;
+    transition: transform var(--transition);
+}
+
+.nav-logo:hover .logo-img {
+    transform: scale(1.08) rotate(-5deg);
+}
+
+.logo-text {
+    color: var(--nav-link);
+    font-weight: 700;
+    font-size: 1.4rem;
+    letter-spacing: 1px;
+}
+
+/* Enlaces de navegación */
+.nav-links {
+    list-style: none;
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    margin: 0 auto; /* Centra los links entre el logo y las acciones */
+    padding: 0;
+}
+
+.nav-link {
+    color: var(--nav-link);
+    text-decoration: none;
+    font-weight: 500;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    position: relative;
+    transition: color var(--transition), background-color var(--transition);
+}
+
+.nav-link:hover,
+.nav-link:focus {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: var(--nav-link-hover);
+}
+
+/* Clase 'active' para la página actual, manejada por JS */
+.nav-link.active {
+    color: var(--nav-link-hover);
+    font-weight: 600;
+}
+
+.nav-link.active::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 50%;
+    height: 3px;
+    background-color: var(--nav-link-hover);
+    border-radius: 2px;
+}
+
+
+/* Acciones del Header (Carrito y Login/Usuario) */
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.cart-link {
+    position: relative;
+    color: var(--nav-link);
+    font-size: 1.4rem;
+    padding: 0.5rem;
+    transition: color var(--transition);
+}
+
+.cart-link:hover {
+    color: var(--nav-link-hover);
+}
+
+.cart-counter {
+    position: absolute;
+    top: -4px;
+    right: -6px;
+    background-color: var(--secondary-color);
+    color: var(--text-color);
+    border-radius: 50%;
+    width: 22px;
+    height: 22px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    display: none; /* Oculto por defecto, JS lo muestra */
+    align-items: center;
+    justify-content: center;
+    border: 2px solid var(--nav-bg);
+}
+
+.user-actions {
+    display: flex;
+    align-items: center;
+}
+
+/* Botón de Iniciar Sesión */
+.btn-login {
+    background-color: rgba(255, 255, 255, 0.15);
+    color: var(--nav-link);
+    padding: 0.6rem 1.2rem;
+    border-radius: 20px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all var(--transition);
+}
+
+.btn-login:hover {
+    background-color: #fff;
+    color: var(--primary-color);
+}
+
+/* --- Menú Hamburguesa para Móviles --- */
+.nav-toggle {
+    display: none; /* Oculto en escritorio */
+    background: none;
+    border: none;
+    color: var(--nav-link);
+    font-size: 1.5rem;
+    cursor: pointer;
+    z-index: 1001; /* Debe estar sobre el menú desplegable */
+}
+
+@media (max-width: 900px) {
+    .nav-container {
+        padding: 0.75rem 1rem;
+    }
+    .nav-links {
+        display: none; /* Ocultamos la lista por defecto */
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100vh;
+        background-color: var(--primary-color);
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 2rem;
+        transform: translateY(-100%);
+        transition: transform 0.3s ease-in-out;
+        z-index: 1000;
+    }
+
+    .nav-links.active {
+        display: flex; /* Mostramos la lista */
+        transform: translateY(0);
+    }
+    
+    .nav-link {
+        font-size: 1.5rem;
+    }
+
+    .nav-toggle {
+        display: block; /* Mostramos el botón de hamburguesa */
+        order: 3; /* Lo ponemos al final */
+    }
+
+    .nav-logo {
+        flex-grow: 1; /* Permite que el logo ocupe el espacio */
+    }
+
+    .header-actions {
+        order: 2; /* Movemos las acciones antes del toggle */
+    }
+
+    /* Ocultamos el texto del logo para dar más espacio */
+    .logo-text {
+        display: none;
+    }
+}

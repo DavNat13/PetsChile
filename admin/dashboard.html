@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Pets Chile</title>
+    <link rel="stylesheet" href="/assets/css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+</head>
+<body>
+    <div class="admin-dashboard">
+        <aside class="admin-sidebar">
+            <div class="sidebar-header">
+                <h3>Pets Chile</h3>
+                <p>Panel de Control</p>
+            </div>
+            <nav class="sidebar-nav">
+                <ul>
+                    <li><a href="dashboard.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                    <li><a href="productosManagement.html"><i class="fas fa-box-open"></i> Productos</a></li>
+                    <li class="nav-item-usuarios"><a href="usuariosManagement.html"><i class="fas fa-users"></i> Usuarios</a></li>
+                    <li><a href="pedidosManagement.html"><i class="fas fa-receipt"></i> Pedidos</a></li>
+                    <li><a href="../index.html"><i class="fas fa-store"></i> Volver a la Tienda</a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <main class="admin-content">
+            <header class="admin-header">
+                <h1>Dashboard</h1>
+                <p>Resumen general de la actividad de tu tienda.</p>
+            </header>
+
+            <section class="stat-cards-grid">
+                <div class="stat-card">
+                    <div class="stat-icon"><i class="fas fa-dollar-sign"></i></div>
+                    <div class="stat-info">
+                        <p>Ingresos Totales (Completados)</p>
+                        <h3 id="total-revenue">$0</h3>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon"><i class="fas fa-receipt"></i></div>
+                    <div class="stat-info">
+                        <p>Pedidos Totales</p>
+                        <h3 id="total-orders">0</h3>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon"><i class="fas fa-users"></i></div>
+                    <div class="stat-info">
+                        <p>Clientes Registrados</p>
+                        <h3 id="total-customers">0</h3>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon"><i class="fas fa-box-open"></i></div>
+                    <div class="stat-info">
+                        <p>Productos en Catálogo</p>
+                        <h3 id="total-products">0</h3>
+                    </div>
+                </div>
+            </section>
+
+            <div class="card-container">
+                <h2>Bienvenido al Panel de Control</h2>
+                <p>Desde aquí podrás gestionar los productos, usuarios y pedidos de Pets Chile. Selecciona una opción del menú de la izquierda para comenzar.</p>
+            </div>
+        </main>
+    </div>
+    <script src="../assets/js/admin.js"></script>
+    <script src="../assets/js/notifications.js"></script>
+</body>
+</html>

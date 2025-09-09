@@ -1,0 +1,28 @@
+/* =========================
+   Variables de Diseño
+   ========================= */
+:root {
+    /* Paleta de Colores Principal */
+    --primary-color: #2e8b57;       /* Verde bosque */
+    --secondary-color: #ffb347;     /* Naranja suave */
+    
+    /* Colores de Fondo y Texto */
+    --background-color: #f0f6f7;     /* Celeste muy claro */
+    --text-color: #263238;         /* Gris oscuro */
+    --light-text-color: #6c757d;   /* Gris más claro para subtítulos */
+    --background-color-light: #ffffff;
+
+    /* Colores de Estado */
+    --danger-color: #d9534f;        /* Rojo para errores/eliminar */
+    --danger-color-hover: #c9302c;
+    
+    /* Colores de la Navegación */
+    --nav-bg: var(--primary-color);
+    --nav-link: #ffffff;
+    --nav-link-hover: var(--secondary-color);
+    
+    /* Otros */
+    --border-color: #e0e0e0;
+    --nav-shadow: 0 4px 16px rgba(46, 139, 87, 0.10);
+    --transition: 0.3s cubic-bezier(.4,0,.2,1);
+}

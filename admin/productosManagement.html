@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestionar Productos - Pets Chile</title>
+    <link rel="stylesheet" href="../assets/css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+</head>
+<body>
+    <div class="admin-dashboard">
+        <aside class="admin-sidebar">
+            <div class="sidebar-header">
+                <h3>Pets Chile</h3>
+                <p>Panel de Control</p>
+            </div>
+            <nav class="sidebar-nav">
+                <ul>
+                    <li><a href="dashboard.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                    <li class="nav-item-productos"><a href="productosManagement.html"><i class="fas fa-box-open"></i> Productos</a></li>
+                    <li class="nav-item-usuarios"><a href="usuariosManagement.html"><i class="fas fa-users"></i> Usuarios</a></li>
+                    <li class="nav-item-ordenes"><a href="pedidosManagement.html"><i class="fas fa-receipt"></i> Pedidos</a></li>
+                    <li><a href="../index.html"><i class="fas fa-store"></i> Volver a la Tienda</a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <main class="admin-content">
+            <header class="admin-header">
+                <h1>Gestionar Productos</h1>
+                <p>Busca, filtra, añade o edita los productos de tu inventario.</p>
+            </header>
+            
+            <div class="card-container">
+                <div class="controls-bar">
+                    <div class="search-bar">
+                        <input type="text" id="search-input" placeholder="Buscar por nombre o código...">
+                        <i class="fas fa-search"></i>
+                    </div>
+                    <div class="filters">
+                        <div class="custom-select-wrapper">
+                            <select id="category-filter">
+                                <option value="">Todas las categorías</option>
+                            </select>
+                        </div>
+                        <div class="custom-select-wrapper">
+                            <select id="stock-filter">
+                                <option value="">Todo el stock</option>
+                                <option value="low-stock">Stock bajo</option>
+                            </select>
+                        </div>
+                        <div class="custom-select-wrapper">
+                            <select id="sort-by">
+                                <option value="default">Ordenar por...</option>
+                                <option value="price-asc">Precio (Menor a Mayor)</option>
+                                <option value="price-desc">Precio (Mayor a Menor)</option>
+                                <option value="name-asc">Nombre (A-Z)</option>
+                                <option value="name-desc">Nombre (Z-A)</option>
+                            </select>
+                        </div>
+                    </div>
+                    <button id="add-product-btn" class="btn-submit">
+                        <i class="fas fa-plus"></i> Nuevo Producto
+                    </button>
+                </div>
+            </div>
+
+            <div class="card-container">
+                <h2>Listado de Productos</h2>
+                <div class="table-responsive">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Código</th>
+                                <th>Nombre</th>
+                                <th>Precio</th>
+                                <th>Stock</th>
+                                <th>Categoría</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="products-table-body"></tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <div id="product-modal" class="modal-overlay" style="display: none;">
+        <div class="modal-content">
+            <header class="modal-header">
+                <h2 id="modal-title">Añadir Nuevo Producto</h2>
+                <button id="close-modal-btn" class="close-btn">&times;</button>
+            </header>
+            <div class="modal-body">
+                <form id="product-form">
+                    <input type="hidden" id="prod-id">
+                    <div class="form-group">
+                        <label for="prod-codigo">Código producto</label>
+                        <input type="text" id="prod-codigo" required minlength="3">
+                    </div>
+                    <div class="form-group">
+                        <label for="prod-nombre">Nombre</label>
+                        <input type="text" id="prod-nombre" required maxlength="100">
+                    </div>
+                    <div class="form-group">
+                        <label for="prod-descripcion">Descripción</label>
+                        <textarea id="prod-descripcion" maxlength="500" rows="4"></textarea>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="prod-precio">Precio</label>
+                            <input type="number" id="prod-precio" required min="0" step="0.01">
+                        </div>
+                        <div class="form-group">
+                            <label for="prod-stock">Stock</label>
+                            <input type="number" id="prod-stock" required min="0" step="1">
+                        </div>
+                        <div class="form-group">
+                            <label for="prod-stock-critico">Stock Crítico</label>
+                            <input type="number" id="prod-stock-critico" min="0" step="1">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="prod-categoria">Categoría</label>
+                            <select id="prod-categoria" required>
+                                <option value="">Seleccione</option>
+                                <option value="Alimentos">Alimentos</option>
+                                <option value="Juguetes">Juguetes</option>
+                                <option value="Accesorios">Accesorios</option>
+                                <option value="Higiene">Higiene</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="prod-imagen">Imagen</label>
+                            <input type="file" id="prod-imagen" accept="image/*" multiple>
+                        </div>
+                    </div>
+                    <div id="image-preview-container" class="image-preview-container"></div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn-submit">Guardar Cambios</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <script src="../assets/js/admin.js"></script>
+    <script src="../assets/js/product_management.js"></script>
+    <script src="../assets/js/notifications.js"></script> 
+</body>
+</html>

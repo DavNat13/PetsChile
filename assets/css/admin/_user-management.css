@@ -1,0 +1,10 @@
+/* =======================================
+   Estilos Específicos: Gestión de Usuarios
+   ======================================= */
+
+/* Actualmente, todos los estilos necesarios (tabla, modal, formularios, etc.) 
+  son heredados desde '_admin.css' para mantener la consistencia visual del panel.
+  
+  Si se necesita un estilo único para la página de gestión de usuarios, 
+  se debe añadir en este archivo.
+*/

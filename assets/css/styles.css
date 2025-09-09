@@ -1,0 +1,39 @@
+/* ===================================================
+   ARCHIVO PRINCIPAL DE ESTILOS (REESTRUCTURADO)
+   =================================================== */
+
+/* 1. Base y Configuración Global */
+@import 'base/_variables.css';
+@import 'base/_base.css';
+
+/* 2. Componentes Reutilizables */
+@import 'components/_navigation.css';
+@import 'components/_buttons.css';
+@import 'components/_cards.css';
+@import 'components/_dropdown.css';
+
+/* 3. Estructura y Layout Principal */
+@import 'layout/_layout.css';
+@import 'layout/_footer.css';
+
+/* 4. Estilos Específicos por Página */
+@import 'pages/_home.css';
+@import 'pages/_catalogo.css';
+@import 'pages/_detalle-producto.css';
+@import 'pages/_carrito.css';
+@import 'pages/_auth.css';
+@import 'pages/contacto.css';
+@import 'pages/nosotros.css';
+
+/* 5. Estilos del Panel de Administración */
+@import 'admin/_admin.css';
+@import 'admin/_product-management.css';
+@import 'admin/_user-management.css';
+@import 'admin/_pedidos-management.css';
+
+
+
+/* 6. Utilidades */
+@import 'utils/_animations.css';
+@import 'partials/_notifications.css';
+@import 'partials/_blog.css';
