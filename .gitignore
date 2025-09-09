@@ -1,0 +1,13 @@
+# Archivos del sistema operativo
+.DS_Store
+Thumbs.db
+
+# Carpetas de editores de código
+.vscode/
+.idea/
+
+# Archivos de log
+*.log
+
+# Dependencias (aunque no se usen ahora, es una buena práctica)
+node_modules/
