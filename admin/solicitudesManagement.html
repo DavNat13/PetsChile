@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gestionar Pedidos - Pets Chile</title>
+    <title>Gestionar Solicitudes - Pets Chile</title>
     <link rel="stylesheet" href="../assets/css/styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 </head>
@@ -28,46 +28,46 @@
 
         <main class="admin-content">
             <header class="admin-header">
-                <h1>Gestionar Pedidos</h1>
-                <p>Revisa y actualiza el estado de los pedidos de los clientes.</p>
+                <h1>Gestionar Solicitudes de Contacto</h1>
+                <p>Revisa, gestiona y responde a los mensajes de los usuarios.</p>
             </header>
 
             <div class="controls-bar card-container">
                 <div class="search-bar">
-                    <input type="text" id="search-input" placeholder="Buscar por N° de pedido o usuario...">
+                    <input type="text" id="search-input" placeholder="Buscar por nombre, email o asunto...">
                     <i class="fas fa-search"></i>
                 </div>
                 <div class="filters">
                     <div class="custom-select-wrapper">
                         <select id="status-filter">
                             <option value="">Todos los estados</option>
-                            <option value="Procesando">Procesando</option>
-                            <option value="Completado">Completado</option>
-                            <option value="Cancelado">Cancelado</option>
+                            <option value="Pendiente">Pendiente</option>
+                            <option value="Respondido">Respondido</option>
+                            <option value="Cerrado">Cerrado</option>
                         </select>
                     </div>
                 </div>
             </div>
 
-            <div class="management-grid" id="orders-grid">
+            <div class="management-grid" id="solicitudes-grid">
                 </div>
         </main>
     </div>
 
-    <div id="order-detail-modal" class="modal-overlay">
+    <div id="solicitud-modal" class="modal-overlay">
         <div class="modal-content large">
             <header class="modal-header">
-                <h2 id="modal-title">Detalles del Pedido</h2>
+                <h2 id="modal-title">Detalle de la Solicitud</h2>
                 <button id="close-modal-btn" class="close-btn">&times;</button>
             </header>
-            <div class="modal-body" id="order-detail-content"></div>
-            <footer class="modal-footer" id="order-modal-footer">
+            <div class="modal-body" id="solicitud-detail-content"></div>
+            <footer class="modal-footer">
                 <div class="form-group">
-                    <label for="order-status-select">Cambiar Estado:</label>
-                    <select id="order-status-select">
-                        <option value="Procesando">Procesando</option>
-                        <option value="Completado">Completado</option>
-                        <option value="Cancelado">Cancelado</option>
+                    <label for="solicitud-status-select">Cambiar Estado:</label>
+                    <select id="solicitud-status-select">
+                        <option value="Pendiente">Pendiente</option>
+                        <option value="Respondido">Respondido</option>
+                        <option value="Cerrado">Cerrado</option>
                     </select>
                 </div>
                 <button id="save-status-btn" class="btn-submit">Guardar Cambios</button>
@@ -77,6 +77,6 @@
 
     <script src="../assets/js/admin.js"></script>
     <script src="../assets/js/notifications.js"></script>
-    <script src="../assets/js/pedidos-management.js"></script>
+    <script src="../assets/js/solicitudes-management.js"></script>
 </body>
 </html>

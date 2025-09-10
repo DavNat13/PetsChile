@@ -6,8 +6,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const productDetailContainer = document.getElementById('product-detail-container');
 
     // --- 1. COMPROBACIÓN INICIAL ---
-    // Si el contenedor principal no existe en esta página, detenemos la ejecución del script.
-    // Esto evita el error "Cannot set properties of null" en otras páginas.
     if (!productDetailContainer) {
         return; 
     }
@@ -20,7 +18,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const urlParams = new URLSearchParams(window.location.search);
     const productCodigo = urlParams.get('codigo');
 
-    // Si no hay un código de producto en la URL, muestra un mensaje y detiene.
     if (!productCodigo) {
         productDetailContainer.innerHTML = '<p class="error-message">Producto no especificado.</p>';
         return;
@@ -29,7 +26,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const products = JSON.parse(localStorage.getItem('products')) || [];
     const product = products.find(p => p.codigo === productCodigo);
 
-    // Si el producto con ese código no se encuentra, muestra un mensaje y detiene.
     if (!product) {
         productDetailContainer.innerHTML = '<p class="error-message">Producto no encontrado.</p>';
         return;
@@ -39,7 +35,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const imagePath = '/assets/img/products/';
     const imageArray = (product.imagenes && product.imagenes.length > 0) ? product.imagenes : ['default.jpg'];
     
-    // Genera las imágenes en miniatura
     const thumbnailsHTML = imageArray.map((imageName, index) => `
         <img src="${imagePath}${imageName}" 
              alt="Miniatura ${index + 1}" 
@@ -47,7 +42,6 @@ document.addEventListener('DOMContentLoaded', () => {
              data-full-src="${imagePath}${imageName}">
     `).join('');
 
-    // Inserta toda la estructura HTML en el contenedor principal
     productDetailContainer.innerHTML = `
         <div class="product-gallery">
             <div class="thumbnail-selector">
@@ -81,7 +75,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Actualiza las migas de pan (breadcrumb)
     if (breadcrumbCategory) {
         breadcrumbCategory.textContent = product.categoria || 'Productos';
-        breadcrumbCategory.href = `productos.html`; // Idealmente, esto debería filtrar por categoría.
+        breadcrumbCategory.href = `productos.html`;
     }
     if (breadcrumbProductTitle) {
         breadcrumbProductTitle.textContent = product.nombre;
@@ -160,7 +154,6 @@ document.addEventListener('DOMContentLoaded', () => {
         localStorage.setItem('cart', JSON.stringify(cart));
         displayFeedback('¡Producto añadido al carrito!', 'success');
         
-        // Llama a la función global de main.js para actualizar el contador del header
         if (window.updateCartCounter) {
             window.updateCartCounter();
         }
@@ -168,7 +161,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function displayFeedback(message, type) {
         feedbackMessage.textContent = message;
-        feedbackMessage.className = `feedback-message ${type}`; // Usa 'success' o 'error'
+        feedbackMessage.className = `feedback-message ${type}`;
         setTimeout(() => {
             feedbackMessage.textContent = '';
             feedbackMessage.className = 'feedback-message';
@@ -177,7 +170,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- 6. RENDERIZADO DE PRODUCTOS SUGERIDOS ---
     if (relatedProductsGrid) {
-        const otherProducts = products.filter(p => p.codigo !== productCodigo && p.categoria === product.categoria);
+        const normalize = str => (str || '').toLowerCase().trim();
+        let otherProducts = products.filter(
+            p => p.codigo !== productCodigo && normalize(p.categoria) === normalize(product.categoria)
+        );
+        // Si no hay productos de la misma categoría, muestra cualquier otro producto
+        if (otherProducts.length === 0) {
+            otherProducts = products.filter(p => p.codigo !== productCodigo);
+        }
         const randomRelated = otherProducts.sort(() => 0.5 - Math.random()).slice(0, 4); 
 
         if (randomRelated.length > 0) {
@@ -198,7 +198,6 @@ document.addEventListener('DOMContentLoaded', () => {
             }).join('');
             relatedProductsGrid.innerHTML = relatedHTML;
         } else {
-            // Oculta la sección si no hay productos que mostrar
             const relatedSection = relatedProductsGrid.closest('.related-products');
             if(relatedSection) relatedSection.style.display = 'none';
         }

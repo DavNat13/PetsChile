@@ -17,9 +17,10 @@
             <nav class="sidebar-nav">
                 <ul>
                     <li><a href="dashboard.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
-                    <li class="nav-item-productos"><a href="productosManagement.html"><i class="fas fa-box-open"></i> Productos</a></li>
+                    <li><a href="productosManagement.html"><i class="fas fa-box-open"></i> Productos</a></li>
                     <li class="nav-item-usuarios"><a href="usuariosManagement.html"><i class="fas fa-users"></i> Usuarios</a></li>                    
-                    <li class="nav-item-ordenes"><a href="pedidosManagement.html"><i class="fas fa-receipt"></i> Pedidos</a></li>
+                    <li><a href="pedidosManagement.html"><i class="fas fa-receipt"></i> Pedidos</a></li>
+                    <li><a href="solicitudesManagement.html"><i class="fas fa-envelope-open-text"></i> Solicitudes</a></li>
                     <li><a href="../index.html"><i class="fas fa-store"></i> Volver a la Tienda</a></li>
                 </ul>
             </nav>
@@ -31,56 +32,39 @@
                 <p>Crea nuevos usuarios o gestiona los existentes.</p>
             </header>
 
-            <div class="card-container">
-                <div class="controls-bar">
-                    <div class="search-bar">
-                        <input type="text" id="search-input" placeholder="Buscar por nombre, apellido o email...">
-                    </div>
-                    <div class="filters">
-                        <div class="custom-select-wrapper">
-                            <select id="role-filter">
-                                <option value="">Todos los roles</option>
-                                <option value="Administrador">Administrador</option>
-                                <option value="Vendedor">Vendedor</option>
-                                <option value="Cliente">Cliente</option>
-                            </select>
-                        </div>
-                        <div class="custom-select-wrapper">
-                            <select id="email-domain-filter">
-                                <option value="">Todos los correos</option>
-                                <option value="@gmail.com">@gmail.com</option>
-                                <option value="@duoc.cl">@duoc.cl</option>
-                                <option value="@profesor.duoc.cl">@profesor.duoc.cl</option>
-                            </select>
-                        </div>
-                    </div>
-                    <button id="add-user-btn" class="btn-submit">
-                        <i class="fas fa-plus"></i> Nuevo Usuario
-                    </button>
+            <div class="controls-bar card-container">
+                <div class="search-bar">
+                    <input type="text" id="search-input" placeholder="Buscar por nombre, apellido o email...">
                 </div>
+                <div class="filters">
+                    <div class="custom-select-wrapper">
+                        <select id="role-filter">
+                            <option value="">Todos los roles</option>
+                            <option value="Administrador">Administrador</option>
+                            <option value="Vendedor">Vendedor</option>
+                            <option value="Cliente">Cliente</option>
+                        </select>
+                    </div>
+                    <div class="custom-select-wrapper">
+                        <select id="email-domain-filter">
+                            <option value="">Todos los correos</option>
+                            <option value="@gmail.com">@gmail.com</option>
+                            <option value="@duoc.cl">@duoc.cl</option>
+                            <option value="@profesor.duoc.cl">@profesor.duoc.cl</option>
+                        </select>
+                    </div>
+                </div>
+                <button id="add-user-btn" class="btn-submit">
+                    <i class="fas fa-plus"></i> Nuevo Usuario
+                </button>
             </div>
 
-            <div class="card-container">
-                <h2>Listado de Usuarios</h2>
-                <div class="table-responsive">
-                    <table class="data-table">
-                        <thead>
-                            <tr>
-                                <th>RUN</th>
-                                <th>Nombre Completo</th>
-                                <th>Correo</th>
-                                <th>Rol</th>
-                                <th>Acciones</th>
-                            </tr>
-                        </thead>
-                        <tbody id="users-table-body"></tbody>
-                    </table>
-                </div>
-            </div>
+            <div class="management-grid" id="users-grid">
+                 </div>
         </main>
     </div>
 
-    <div id="user-modal" class="modal-overlay" style="display: none;">
+    <div id="user-modal" class="modal-overlay">
         <div class="modal-content">
             <header class="modal-header">
                 <h2 id="modal-title">Añadir Nuevo Usuario</h2>
@@ -92,7 +76,7 @@
                     
                     <div class="form-group">
                         <label for="user-run">RUN</label>
-                        <input type="text" id="user-run" placeholder="19011022K" required minlength="7" maxlength="9">
+                        <input type="text" id="user-run" placeholder="19011022-K" required maxlength="10">
                     </div>
                     <div class="form-row">
                         <div class="form-group">

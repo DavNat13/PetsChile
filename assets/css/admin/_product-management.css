@@ -1,103 +1,80 @@
 /* =======================================
-   Admin: Gestión de Productos
+   Admin: Gestión de Productos - Modal
    ======================================= */
 
-/* --- Selectores de Filtro Personalizados --- */
-.custom-select-wrapper {
-    position: relative;
-    background-color: #fff;
-    border: 1.5px solid var(--border-color);
-    border-radius: 8px;
-}
-.custom-select-wrapper::after {
-    content: '▼';
-    position: absolute;
-    right: 15px;
-    top: 50%;
-    transform: translateY(-50%);
-    font-size: 0.7rem;
-    color: #aaa;
-    pointer-events: none;
-}
-.custom-select-wrapper select {
-    -webkit-appearance: none;
-    appearance: none;
-    background-color: transparent;
-    border: none;
-    padding: 10px 36px 10px 16px;
-    cursor: pointer;
-    width: 100%;
-    min-width: 180px;
-}
-
-/* --- Tabla de Datos Responsive --- */
-.table-responsive {
-    overflow-x: auto;
-}
-.data-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 1rem;
-    min-width: 600px; /* Evita que la tabla se comprima demasiado */
-}
-.data-table th, .data-table td {
-    padding: 14px;
-    border-bottom: 1px solid var(--border-color);
-    text-align: left;
-    vertical-align: middle;
-}
-.data-table thead th {
-    background-color: #f8f9fa;
-    font-size: 0.8rem;
-    text-transform: uppercase;
-    color: var(--light-text-color);
-}
-.data-table tbody tr:hover {
-    background-color: #f8f9fa;
-}
-
-/* --- Previsualización de Imágenes en Modal --- */
-.image-preview-container {
-    margin-top: 1rem;
+/* Estilos específicos para el layout de 2 columnas en el formulario del modal */
+.modal-body .form-row {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
-    gap: 1rem;
-    padding: 1rem;
-    background-color: #f8f9fa;
-    border-radius: 8px;
-    min-height: 60px;
+    grid-template-columns: repeat(auto-fit, minmax(calc(50% - 0.75rem), 1fr));
+    gap: 1.5rem;
+    margin-bottom: 1rem;
 }
+
+/* Ajustes para que los selectores de categoría y stock crítico no se vean apretados */
+.modal-body .form-row .form-group {
+    margin-bottom: 0; /* Resetear el margin-bottom del form-group si está dentro de form-row */
+}
+
+/* Estilos para el contenedor de previsualización de imágenes */
+.image-preview-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 15px;
+    padding: 10px;
+    border: 1px dashed var(--border-color);
+    border-radius: 8px;
+    min-height: 80px; /* Para que siempre se vea el borde */
+    justify-content: center;
+    align-items: center;
+    background-color: #fcfcfc;
+}
+
 .preview-image-wrapper {
     position: relative;
-    width: 90px;
-    height: 90px;
-}
-.preview-image {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    border-radius: 6px;
+    width: 80px;
+    height: 80px;
     border: 1px solid #ddd;
+    border-radius: 5px;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f0f0f0;
 }
+
+.preview-image-wrapper img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: cover;
+}
+
 .remove-image-btn {
     position: absolute;
-    top: -8px;
-    right: -8px;
+    top: -5px;
+    right: -5px;
     background-color: var(--danger-color);
     color: white;
-    border: 2px solid white;
+    border: none;
     border-radius: 50%;
-    width: 24px;
-    height: 24px;
-    font-weight: bold;
-    cursor: pointer;
+    width: 20px;
+    height: 20px;
+    font-size: 0.9em;
     display: flex;
-    align-items: center;
     justify-content: center;
+    align-items: center;
+    cursor: pointer;
     line-height: 1;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.2);
-    transition: transform 0.2s ease;
+    transition: background-color 0.2s ease;
 }
+
 .remove-image-btn:hover {
-    transform: scale(1.1);
+    background-color: var(--danger-color-dark);
+}
+
+/* Asegurar que el input file no se vea afectado por estilos generales */
+input[type="file"]#prod-imagen {
+    padding: 0;
+    border: none;
+    background-color: transparent;
 }

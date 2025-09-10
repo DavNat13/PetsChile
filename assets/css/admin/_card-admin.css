@@ -1,0 +1,177 @@
+/* =======================================
+   Admin: Nuevo Diseño de Tarjetas (Compacto y Moderno)
+   ======================================= */
+
+.management-grid {
+    display: grid;
+    grid-template-columns: 1fr; /* Una sola columna para un diseño de lista */
+    gap: 1rem;
+    margin-top: 1.5rem;
+}
+
+.management-card {
+    background-color: var(--background-color-light); /* Usamos variable para el fondo */
+    border: 1px solid var(--border-color); /* Usamos variable para el borde */
+    border-left: 5px solid var(--light-text-color); /* Borde de estado por defecto (gris claro) */
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+    display: flex;
+    align-items: center;
+    padding: 1.25rem 1.5rem;
+    transition: all var(--transition); /* Usamos la variable de transición */
+}
+
+.management-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    border-left-color: var(--primary-color); /* Resaltamos con el color primario en hover */
+}
+
+/* --- Colores del borde izquierdo según el estado --- */
+/* Nota: Se recomienda añadir --success-color y --warning-color en _variables.css */
+.management-card.status-procesando,
+.management-card.status-pendiente {
+    border-left-color: var(--secondary-color); /* Naranja suave de la paleta */
+}
+.management-card.status-completado,
+.management-card.status-respondido {
+    border-left-color: var(--primary-color); /* Verde bosque de la paleta */
+}
+.management-card.status-cancelado,
+.management-card.status-cerrado {
+    border-left-color: var(--danger-color); /* Rojo de la paleta */
+}
+
+/* --- Contenedor de los detalles --- */
+.card-details {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.card-title {
+    font-weight: 600;
+    color: var(--text-color); /* Variable para el color del texto */
+    font-size: 1.1em;
+    margin: 0 0 0.75rem 0;
+}
+
+.card-info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 0.5rem 1.5rem;
+    font-size: 0.9rem;
+}
+
+.info-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.info-item i {
+    color: var(--light-text-color); /* Variable para íconos y texto claro */
+    width: 16px;
+    text-align: center;
+}
+
+.info-item span {
+    color: var(--text-color); /* Variable para el color del texto */
+}
+
+.info-item strong {
+    color: var(--light-text-color); /* Variable para texto claro */
+    font-weight: 500;
+}
+
+/* --- Contenedor de las acciones (botones) --- */
+.card-actions {
+    display: flex;
+    gap: 0.5rem;
+    padding-left: 1.5rem;
+}
+
+.action-btn {
+    position: relative;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1rem;
+    color: var(--light-text-color); /* Usamos variable para el color */
+    padding: 8px;
+    border-radius: 50%;
+    width: 38px;
+    height: 38px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all var(--transition); /* Usamos la variable de transición */
+}
+
+/* Colores específicos para cada botón en hover */
+.action-btn.btn-view:hover {
+    background-color: #eaf2fd; /* Un azul claro complementario */
+    color: var(--primary-color);
+}
+.action-btn.btn-edit:hover {
+    background-color: #fff8e1; /* Un amarillo claro complementario */
+    color: var(--secondary-color);
+}
+.action-btn.btn-delete:hover {
+    background-color: #fbeae9; /* Un rojo claro complementario */
+    color: var(--danger-color);
+}
+
+.action-btn::after {
+    content: attr(title);
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: var(--text-color); /* Usamos variable para el fondo */
+    color: var(--background-color-light); /* Usamos variable para el texto */
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.2s, visibility 0.2s;
+    margin-bottom: 8px;
+}
+.action-btn:hover::after {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* --- Mensaje para cuando no hay elementos --- */
+.empty-message {
+    text-align: center;
+    padding: 3rem;
+    color: var(--light-text-color);
+    font-size: 1.1rem;
+    background-color: var(--background-color-light); /* Variable para el fondo */
+    border-radius: 10px;
+    border: 2px dashed var(--border-color); /* Variable para el borde */
+}
+
+/* --- Diseño Responsivo para Móviles --- */
+@media (max-width: 768px) {
+    .management-card {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 1.25rem;
+    }
+
+    .card-info-grid {
+        grid-template-columns: 1fr; /* Una sola columna en móviles */
+        gap: 0.75rem;
+    }
+
+    .card-actions {
+        padding-left: 0;
+        margin-top: 1.25rem;
+        width: 100%;
+        justify-content: flex-end; /* Alinea los botones a la derecha */
+    }
+}

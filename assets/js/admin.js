@@ -32,15 +32,18 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // --- 4. LÓGICA DEL DASHBOARD (NUEVO) ---
+    // --- 4. LÓGICA DEL DASHBOARD (ACTUALIZADA) ---
     // Se ejecuta solo si estamos en la página del dashboard
     if (document.querySelector('.stat-cards-grid')) {
         const welcomeHeader = document.querySelector('.admin-header h1');
         welcomeHeader.textContent = `Bienvenido, ${currentUser.name}`;
 
+        // Obtener todos los datos de localStorage
         const orders = JSON.parse(localStorage.getItem('orders')) || [];
         const users = JSON.parse(localStorage.getItem('users')) || [];
         const products = JSON.parse(localStorage.getItem('products')) || [];
+        // INICIO: Lógica añadida para solicitudes
+        const solicitudes = JSON.parse(localStorage.getItem('solicitudes')) || [];
 
         // Calcular Ingresos Totales (solo de pedidos completados)
         const totalRevenue = orders
@@ -50,10 +53,18 @@ document.addEventListener('DOMContentLoaded', function() {
         // Contar clientes (usuarios con rol "Cliente")
         const totalCustomers = users.filter(user => user.role === 'Cliente').length;
 
+        // Contar solicitudes pendientes
+        const pendingRequests = solicitudes.filter(s => s.estado === 'Pendiente').length;
+        // FIN: Lógica añadida para solicitudes
+
         // Mostrar estadísticas
         document.getElementById('total-revenue').textContent = `$${totalRevenue.toLocaleString('es-CL')}`;
         document.getElementById('total-orders').textContent = orders.length;
         document.getElementById('total-customers').textContent = totalCustomers;
         document.getElementById('total-products').textContent = products.length;
+        // INICIO: Mostrar nuevas estadísticas
+        document.getElementById('total-requests').textContent = solicitudes.length;
+        document.getElementById('pending-requests').textContent = pendingRequests;
+        // FIN: Mostrar nuevas estadísticas
     }
 });

@@ -1,11 +1,29 @@
 // /assets/js/user-management.js
 document.addEventListener('DOMContentLoaded', function() {
-    if (!document.getElementById('users-table-body')) return;
+    const gridContainer = document.getElementById('users-grid');
+    if (!gridContainer) return;
+
+    // --- CÓDIGO PARA AUTOFORMATO DEL RUN EN EL MODAL ---
+    const runInputModal = document.getElementById('user-run');
+    if (runInputModal) {
+        runInputModal.addEventListener('input', (e) => {
+            let run = e.target.value.replace(/[^0-9kK]/g, '');
+            if (run.length > 9) {
+                run = run.substring(0, 9);
+            }
+            if (run.length > 1) {
+                const body = run.slice(0, -1);
+                const dv = run.slice(-1).toUpperCase();
+                e.target.value = body + '-' + dv;
+            } else {
+                e.target.value = run.toUpperCase();
+            }
+        });
+    }
 
     const modal = document.getElementById('user-modal');
     const userForm = document.getElementById('user-form');
-    const tableBody = document.getElementById('users-table-body');
-
+    
     const validarRun = (run) => {
         run = run.replace(/\./g, '').replace(/-/g, '').trim().toUpperCase();
         if (!/^[0-9]{7,8}[0-9K]$/.test(run)) return false;
@@ -40,7 +58,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const searchTerm = searchInput.value.toLowerCase();
         const role = roleFilter.value;
         const domain = emailDomainFilter.value;
-        if (searchTerm) filteredUsers = filteredUsers.filter(u => `${u.nombre} ${u.apellidos}`.toLowerCase().includes(searchTerm) || u.email.toLowerCase().includes(searchTerm));
+        if (searchTerm) filteredUsers = filteredUsers.filter(u => `${u.nombre} ${u.apellidos}`.toLowerCase().includes(searchTerm) || u.email.toLowerCase().includes(searchTerm) || u.run.toLowerCase().includes(searchTerm));
         if (role) filteredUsers = filteredUsers.filter(u => u.role === role);
         if (domain) filteredUsers = filteredUsers.filter(u => u.email.endsWith(domain));
         return filteredUsers;
@@ -49,22 +67,42 @@ document.addEventListener('DOMContentLoaded', function() {
     const displayUsers = () => {
         const users = JSON.parse(localStorage.getItem('users')) || [];
         const filteredUsers = applyFilters(users);
+        
+        gridContainer.innerHTML = '';
         if (filteredUsers.length === 0) {
-            tableBody.innerHTML = '<tr><td colspan="5" style="text-align:center; padding: 20px;">No se encontraron usuarios.</td></tr>';
+            gridContainer.innerHTML = '<p class="empty-message">No se encontraron usuarios.</p>';
             return;
         }
-        const tableHTML = filteredUsers.map(user => `
-            <tr data-run="${user.run}">
-                <td>${user.run}</td>
-                <td>${user.nombre} ${user.apellidos}</td>
-                <td>${user.email}</td>
-                <td>${user.role}</td>
-                <td>
+
+        filteredUsers.forEach(user => {
+            const card = document.createElement('div');
+            card.className = 'management-card';
+            card.setAttribute('data-run', user.run);
+            card.innerHTML = `
+                <div class="card-details">
+                    <h4 class="card-title">${user.nombre} ${user.apellidos}</h4>
+                    <div class="card-info-grid">
+                        <div class="info-item">
+                            <i class="fas fa-id-card"></i>
+                            <span><strong>RUN:</strong> ${user.run}</span>
+                        </div>
+                        <div class="info-item">
+                            <i class="fas fa-envelope"></i>
+                            <span><strong>Email:</strong> ${user.email}</span>
+                        </div>
+                        <div class="info-item">
+                            <i class="fas fa-user-tag"></i>
+                            <span><strong>Rol:</strong> ${user.role}</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-actions">
                     <button class="action-btn btn-edit" title="Editar"><i class="fas fa-pencil-alt"></i></button>
                     <button class="action-btn btn-delete" title="Eliminar"><i class="fas fa-trash-alt"></i></button>
-                </td>
-            </tr>`).join('');
-        tableBody.innerHTML = tableHTML;
+                </div>
+            `;
+            gridContainer.appendChild(card);
+        });
     };
 
     userForm.addEventListener('submit', (e) => {
@@ -105,11 +143,13 @@ document.addEventListener('DOMContentLoaded', function() {
         displayUsers();
     });
 
-    tableBody.addEventListener('click', (e) => {
-        const row = e.target.closest('tr');
-        if (!row) return;
-        const run = row.dataset.run;
+    gridContainer.addEventListener('click', (e) => {
+        const card = e.target.closest('.management-card');
+        if (!card) return;
+        
+        const run = card.dataset.run;
         if (!run) return;
+
         const users = JSON.parse(localStorage.getItem('users')) || [];
         const user = users.find(u => u.run === run);
         if (!user) return;
@@ -155,6 +195,7 @@ document.addEventListener('DOMContentLoaded', function() {
         modal.querySelector('.modal-content').style.transform = 'scale(0.9)';
         setTimeout(() => {
             modal.style.display = 'none';
+            userForm.reset();
         }, 300);
     };
     

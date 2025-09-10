@@ -4,7 +4,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const validarRun = (run) => {
         run = run.replace(/\./g, '').replace(/-/g, '').trim().toUpperCase();
         if (!/^[0-9]{7,8}[0-9K]$/.test(run)) return false;
-        let cuerpo = run.slice(0, -1), dv = run.slice(-1), suma = 0, multiplo = 2;
+        let cuerpo = run.slice(0, -1);
+        let dv = run.slice(-1);
+        let suma = 0;
+        let multiplo = 2;
         for (let i = cuerpo.length - 1; i >= 0; i--) {
             suma += multiplo * cuerpo.charAt(i);
             multiplo = multiplo === 7 ? 2 : multiplo + 1;
@@ -22,6 +25,26 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- LÓGICA DE REGISTRO ---
     const registerForm = document.getElementById('register-form');
     if (registerForm) {
+        const runInput = document.getElementById('reg-run');
+        if (runInput) {
+            runInput.addEventListener('input', (e) => {
+                let run = e.target.value.replace(/[^0-9kK]/g, '');
+                
+                // MEJORA: Se añade un límite de 9 caracteres al RUN sin formato
+                if (run.length > 9) {
+                    run = run.substring(0, 9);
+                }
+                
+                if (run.length > 1) {
+                    const body = run.slice(0, -1);
+                    const dv = run.slice(-1).toUpperCase();
+                    e.target.value = body + '-' + dv;
+                } else {
+                    e.target.value = run.toUpperCase();
+                }
+            });
+        }
+
         const regionSelect = document.getElementById('reg-region');
         const comunaSelect = document.getElementById('reg-comuna');
 
@@ -47,8 +70,17 @@ document.addEventListener('DOMContentLoaded', () => {
             e.preventDefault();
             const run = document.getElementById('reg-run').value;
             const email = document.getElementById('reg-email').value;
-            if (!validarRun(run)) { return showToast('El RUN no es válido.', 'error'); }
-            if (!validarCorreo(email)) { return showToast('El dominio del correo no es válido.', 'error'); }
+            const password = document.getElementById('reg-password').value;
+
+            if (!validarRun(run)) { 
+                return showToast('El RUN ingresado no es válido.', 'error'); 
+            }
+            if (!validarCorreo(email)) { 
+                return showToast('El correo debe ser @duoc.cl, @profesor.duoc.cl o @gmail.com.', 'error'); 
+            }
+            if (password.length < 6) {
+                return showToast('La contraseña debe tener un mínimo de 6 caracteres.', 'error');
+            }
             
             const newUser = {
                 run: run.replace(/\./g, '').replace(/-/g, '').trim().toUpperCase(),
@@ -60,18 +92,19 @@ document.addEventListener('DOMContentLoaded', () => {
                 region: regionSelect.value,
                 comuna: comunaSelect.value,
                 direccion: document.getElementById('reg-direccion').value,
-                password: document.getElementById('reg-password').value
+                password: password
             };
 
             for (const key in newUser) {
                 if (!newUser[key]) {
-                    return showToast(`El campo '${key}' es obligatorio.`, 'error');
+                    const campoNombre = key.charAt(0).toUpperCase() + key.slice(1);
+                    return showToast(`El campo '${campoNombre}' es obligatorio.`, 'error');
                 }
             }
             
             let users = JSON.parse(localStorage.getItem('users')) || [];
             if (users.some(user => user.run === newUser.run || user.email === newUser.email)) {
-                return showToast('El RUN o el correo ya están registrados.', 'error');
+                return showToast('El RUN o el correo electrónico ya están registrados.', 'error');
             }
 
             users.push(newUser);
@@ -79,7 +112,7 @@ document.addEventListener('DOMContentLoaded', () => {
             showToast('¡Registro exitoso! Serás redirigido para iniciar sesión.', 'success');
             setTimeout(() => {
                 window.location.href = 'login.html';
-            }, 1500);
+            }, 2000);
         });
 
         const togglePassword = document.getElementById('togglePassword');
@@ -94,14 +127,16 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // --- LÓGICA DE INICIO DE SESIÓN (CORREGIDA Y COMPLETA) ---
+    // --- LÓGICA DE INICIO DE SESIÓN ---
     const loginForm = document.getElementById('login-form');
     if (loginForm) {
         loginForm.addEventListener('submit', (e) => {
             e.preventDefault();
             const email = document.getElementById('login-email').value;
             const password = document.getElementById('login-password').value;
-            if (!email || !password) { return showToast('Todos los campos son obligatorios.', 'error'); }
+            if (!email || !password) { 
+                return showToast('El correo y la contraseña son obligatorios.', 'error'); 
+            }
 
             const users = JSON.parse(localStorage.getItem('users')) || [];
             const user = users.find(u => u.email === email && u.password === password);
@@ -116,16 +151,16 @@ document.addEventListener('DOMContentLoaded', () => {
                     direccion: user.direccion
                 }));
 
-                showToast('¡Inicio de sesión exitoso!', 'success');
+                showToast(`¡Bienvenido, ${user.nombre}!`, 'success');
                 setTimeout(() => {
                     if (user.role === 'Administrador' || user.role === 'Vendedor') {
                         window.location.href = 'admin/dashboard.html';
                     } else {
                         window.location.href = 'index.html';
                     }
-                }, 1000);
+                }, 1500);
             } else {
-                showToast('Correo o contraseña incorrectos.', 'error');
+                showToast('Correo electrónico o contraseña incorrectos.', 'error');
             }
         });
 

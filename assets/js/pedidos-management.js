@@ -1,7 +1,7 @@
 // /assets/js/pedidos-management.js
 document.addEventListener('DOMContentLoaded', () => {
-    const ordersTableBody = document.getElementById('orders-table-body');
-    if (!ordersTableBody) return;
+    const gridContainer = document.getElementById('orders-grid');
+    if (!gridContainer) return;
 
     const modal = document.getElementById('order-detail-modal');
     const closeModalBtn = document.getElementById('close-modal-btn');
@@ -33,7 +33,6 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             setTimeout(() => {
                 modal.style.display = 'none';
-                modalFooter.style.display = 'none';
                 currentEditingOrderId = null;
             }, 300);
         }
@@ -63,32 +62,47 @@ document.addEventListener('DOMContentLoaded', () => {
     function displayOrders() {
         const orders = JSON.parse(localStorage.getItem('orders')) || [];
         const filteredOrders = applyFilters(orders);
-        ordersTableBody.innerHTML = '';
-
+        
+        gridContainer.innerHTML = '';
         if (filteredOrders.length === 0) {
-            ordersTableBody.innerHTML = '<tr><td colspan="6" style="text-align:center;">No hay pedidos para mostrar.</td></tr>';
+            gridContainer.innerHTML = '<p class="empty-message">No hay pedidos para mostrar.</p>';
             return;
         }
 
         filteredOrders.sort((a, b) => new Date(b.orderDate) - new Date(a.orderDate));
 
         filteredOrders.forEach(order => {
-            const row = document.createElement('tr');
-            // --- CAMBIO AQUÍ: Añadimos el botón de eliminar ---
-            row.innerHTML = `
-                <td>${order.orderId}</td>
-                <td>${order.userName}</td>
-                <td>${new Date(order.orderDate).toLocaleDateString('es-CL')}</td>
-                <td>$${order.total.toLocaleString('es-CL')}</td>
-                <td><span class="status-badge status-${order.status.toLowerCase()}">${order.status}</span></td>
-                <td class="actions-cell">
-                    <button class="action-btn btn-view" data-order-id="${order.orderId}" title="Ver Detalle"><i class="fas fa-eye"></i></button>
-                    <button class="action-btn btn-complete" data-order-id="${order.orderId}" title="Marcar como Completado"><i class="fas fa-check"></i></button>
-                    <button class="action-btn btn-cancel" data-order-id="${order.orderId}" title="Cancelar Pedido"><i class="fas fa-times"></i></button>
+            const card = document.createElement('div');
+            // Añadimos la clase de estado dinámicamente
+            card.className = `management-card status-${order.status.toLowerCase()}`;
+            card.innerHTML = `
+                <div class="card-details">
+                     <h4 class="card-title">${order.orderId}</h4>
+                    <div class="card-info-grid">
+                        <div class="info-item">
+                            <i class="fas fa-user"></i>
+                            <span><strong>Usuario:</strong> ${order.userName}</span>
+                        </div>
+                        <div class="info-item">
+                            <i class="fas fa-calendar-alt"></i>
+                            <span><strong>Fecha:</strong> ${new Date(order.orderDate).toLocaleDateString('es-CL')}</span>
+                        </div>
+                        <div class="info-item">
+                            <i class="fas fa-dollar-sign"></i>
+                            <span><strong>Total:</strong> $${order.total.toLocaleString('es-CL')}</span>
+                        </div>
+                        <div class="info-item">
+                            <i class="fas fa-info-circle"></i>
+                            <span><strong>Estado:</strong> ${order.status}</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-actions">
+                    <button class="action-btn btn-view" data-order-id="${order.orderId}" title="Ver Detalles"><i class="fas fa-eye"></i></button>
                     <button class="action-btn btn-delete" data-order-id="${order.orderId}" title="Eliminar Pedido"><i class="fas fa-trash-alt"></i></button>
-                </td>
+                </div>
             `;
-            ordersTableBody.appendChild(row);
+            gridContainer.appendChild(card);
         });
     }
 
@@ -120,10 +134,9 @@ document.addEventListener('DOMContentLoaded', () => {
         const orders = JSON.parse(localStorage.getItem('orders')) || [];
         const order = orders.find(o => o.orderId === orderId);
         if (!order || !orderDetailContent) return;
-        
+
         currentEditingOrderId = orderId;
         statusSelect.value = order.status;
-        modalFooter.style.display = 'flex';
 
         const itemsHTML = order.items.map(item => `
             <tr>
@@ -134,21 +147,48 @@ document.addEventListener('DOMContentLoaded', () => {
             </tr>
         `).join('');
 
-        // --- CAMBIO AQUÍ: Mostramos la dirección del usuario ---
         orderDetailContent.innerHTML = `
-            <div class="order-details-grid">
-                <div><strong>N° Pedido:</strong> ${order.orderId}</div>
-                <div><strong>Total:</strong> $${order.total.toLocaleString('es-CL')}</div>
-                <div><strong>Fecha:</strong> ${new Date(order.orderDate).toLocaleString('es-CL')}</div>
-                <div><strong>Usuario:</strong> ${order.userName} (${order.userId})</div>
-                <div><strong>Dirección de Envío:</strong> ${order.userAddress}</div>
-                <div><strong>Estado Actual:</strong> <span class="status-badge status-${order.status.toLowerCase()}">${order.status}</span></div>
+            <div class="order-details-sections">
+                <div class="order-details-section">
+                    <div class="detail-item">
+                        <i class="fas fa-hashtag"></i>
+                        <div><strong>N° Pedido:</strong><span>${order.orderId}</span></div>
+                    </div>
+                    <div class="detail-item">
+                        <i class="fas fa-calendar-alt"></i>
+                        <div><strong>Fecha:</strong><span>${new Date(order.orderDate).toLocaleString('es-CL')}</span></div>
+                    </div>
+                    <div class="detail-item">
+                        <i class="fas fa-dollar-sign"></i>
+                        <div><strong>Total:</strong><span>$${order.total.toLocaleString('es-CL')}</span></div>
+                    </div>
+                </div>
+                <div class="order-details-section">
+                    <div class="detail-item">
+                        <i class="fas fa-user"></i>
+                        <div><strong>Usuario:</strong><span>${order.userName} (${order.userId})</span></div>
+                    </div>
+                    <div class="detail-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <div><strong>Dirección:</strong><span>${order.userAddress || 'No especificada'}</span></div>
+                    </div>
+                    <div class="detail-item">
+                        <i class="fas fa-info-circle"></i>
+                        <div><strong>Estado Actual:</strong><span class="status-badge status-${order.status.toLowerCase()}">${order.status}</span></div>
+                    </div>
+                </div>
             </div>
-            <h4 class="mt-3">Productos Incluidos</h4>
+
+            <h4>Productos Incluidos</h4>
             <div class="table-responsive">
                 <table class="data-table">
                     <thead>
-                        <tr><th>Producto</th><th>Cantidad</th><th>Precio Unit.</th><th>Subtotal</th></tr>
+                        <tr>
+                            <th>Producto</th>
+                            <th>Cantidad</th>
+                            <th>Precio Unit.</th>
+                            <th>Subtotal</th>
+                        </tr>
                     </thead>
                     <tbody>${itemsHTML}</tbody>
                 </table>
@@ -157,26 +197,13 @@ document.addEventListener('DOMContentLoaded', () => {
         openModal();
     }
 
-    ordersTableBody.addEventListener('click', (e) => {
+    gridContainer.addEventListener('click', (e) => {
         const button = e.target.closest('.action-btn');
         if (!button) return;
 
         const orderId = button.dataset.orderId;
         if (button.classList.contains('btn-view')) {
             showOrderDetails(orderId);
-        } else if (button.classList.contains('btn-complete')) {
-            showConfirmation('¿Marcar este pedido como "Completado"?', () => {
-                if (updateOrderStatus(orderId, 'Completado')) {
-                    showToast('Pedido marcado como Completado.', 'success');
-                }
-            });
-        } else if (button.classList.contains('btn-cancel')) {
-            showConfirmation('¿Estás seguro de que quieres "Cancelar" este pedido?', () => {
-                if (updateOrderStatus(orderId, 'Cancelado')) {
-                    showToast('El pedido ha sido cancelado.', 'success');
-                }
-            });
-        // --- NUEVA LÓGICA AQUÍ: Para el botón de eliminar ---
         } else if (button.classList.contains('btn-delete')) {
             showConfirmation('¿Eliminar este pedido permanentemente? Esta acción no se puede deshacer.', () => {
                 let orders = JSON.parse(localStorage.getItem('orders')) || [];

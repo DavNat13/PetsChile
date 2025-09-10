@@ -1,17 +1,19 @@
 // /assets/js/product_management.js
 document.addEventListener('DOMContentLoaded', function() {
-    if (document.getElementById('products-table-body')) {
+    // Verifica si el contenedor de la grilla de productos existe para ejecutar el script.
+    if (document.getElementById('products-grid')) {
         
         const modal = document.getElementById('product-modal');
         const addProductBtn = document.getElementById('add-product-btn');
         const closeModalBtn = document.getElementById('close-modal-btn');
         const productForm = document.getElementById('product-form');
-        const tableBody = document.getElementById('products-table-body');
+        const gridContainer = document.getElementById('products-grid'); // Cambiado de tableBody a gridContainer
         const imageInput = document.getElementById('prod-imagen');
         const imagePreviewContainer = document.getElementById('image-preview-container');
 
         let currentImageFiles = [];
 
+        // Funciones para abrir y cerrar el modal (sin cambios)
         const openModal = () => {
             modal.style.display = 'flex';
             setTimeout(() => {
@@ -37,6 +39,7 @@ document.addEventListener('DOMContentLoaded', function() {
         addProductBtn.addEventListener('click', openModal);
         closeModalBtn.addEventListener('click', closeModal);
 
+        // Funciones para manejar la previsualización de imágenes (sin cambios)
         const renderImagePreviews = (imageSource) => {
             imagePreviewContainer.innerHTML = '';
             const imagePath = '/assets/img/products/';
@@ -78,11 +81,13 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
 
+        // Selectores para filtros y ordenamiento
         const searchInput = document.getElementById('search-input');
         const categoryFilter = document.getElementById('category-filter');
         const stockFilter = document.getElementById('stock-filter');
         const sortBy = document.getElementById('sort-by');
 
+        // Lógica para aplicar filtros y ordenamiento (sin cambios)
         const applyFiltersAndSort = (products) => {
             let filteredProducts = [...products];
             const searchTerm = searchInput.value.toLowerCase();
@@ -110,35 +115,51 @@ document.addEventListener('DOMContentLoaded', function() {
             return filteredProducts;
         };
 
+        // Función principal para mostrar los productos como tarjetas
         const displayProducts = () => {
             const products = JSON.parse(localStorage.getItem('products')) || [];
             const processedProducts = applyFiltersAndSort(products);
-            tableBody.innerHTML = ''; 
+            gridContainer.innerHTML = '';
             if (processedProducts.length === 0) {
-                tableBody.innerHTML = '<tr><td colspan="6" style="text-align:center; padding: 20px;">No se encontraron productos.</td></tr>';
+                gridContainer.innerHTML = '<p class="empty-message">No se encontraron productos.</p>';
                 return;
             }
             processedProducts.forEach(product => {
-                const originalProduct = products.find(p => p.codigo === product.codigo);
-                const originalIndex = products.indexOf(originalProduct);
-                const precioFormateado = (typeof product.precio === 'number') ? `$${product.precio.toLocaleString('es-CL')}` : '$0'; 
-                const row = document.createElement('tr');
-                row.dataset.originalIndex = originalIndex;
-                row.innerHTML = `
-                    <td>${product.codigo || 'N/A'}</td>
-                    <td>${product.nombre || 'Sin nombre'}</td>
-                    <td>${precioFormateado}</td>
-                    <td>${product.stock ?? 0}</td>
-                    <td>${product.categoria || 'Sin categoría'}</td>
-                    <td>
-                        <button class="action-btn btn-edit" title="Editar"><i class="fas fa-pencil-alt"></i></button>
-                        <button class="action-btn btn-delete" title="Eliminar"><i class="fas fa-trash-alt"></i></button>
-                    </td>
+                const originalIndex = products.indexOf(products.find(p => p.codigo === product.codigo));
+                const card = document.createElement('div');
+                card.className = 'management-card'; // Clase base
+                card.innerHTML = `
+                    <div class="card-details">
+                        <h4 class="card-title">${product.nombre}</h4>
+                        <div class="card-info-grid">
+                            <div class="info-item">
+                                <i class="fas fa-barcode"></i>
+                                <span><strong>Código:</strong> ${product.codigo || 'N/A'}</span>
+                            </div>
+                            <div class="info-item">
+                                <i class="fas fa-dollar-sign"></i>
+                                <span><strong>Precio:</strong> $${(product.precio || 0).toLocaleString('es-CL')}</span>
+                            </div>
+                            <div class="info-item">
+                                <i class="fas fa-boxes-stacked"></i>
+                                <span><strong>Stock:</strong> ${product.stock ?? 0}</span>
+                            </div>
+                            <div class="info-item">
+                                <i class="fas fa-tag"></i>
+                                <span><strong>Categoría:</strong> ${product.categoria || 'N/A'}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-actions">
+                        <button class="action-btn btn-edit" data-original-index="${originalIndex}" title="Editar"><i class="fas fa-pencil-alt"></i></button>
+                        <button class="action-btn btn-delete" data-original-index="${originalIndex}" title="Eliminar"><i class="fas fa-trash-alt"></i></button>
+                    </div>
                 `;
-                tableBody.appendChild(row);
+                gridContainer.appendChild(card);
             });
         };
 
+        // Lógica del formulario de producto (sin cambios)
         productForm.addEventListener('submit', (e) => {
             e.preventDefault();
             const products = JSON.parse(localStorage.getItem('products')) || [];
@@ -179,16 +200,18 @@ document.addEventListener('DOMContentLoaded', function() {
             loadCategories();
         });
 
-        tableBody.addEventListener('click', (e) => {
+        // Event listener para los botones de las tarjetas (ahora en gridContainer)
+        gridContainer.addEventListener('click', (e) => {
             const products = JSON.parse(localStorage.getItem('products')) || [];
-            const row = e.target.closest('tr');
-            if (!row) return;
-            const index = row.dataset.originalIndex;
+            const button = e.target.closest('.action-btn');
+            if (!button) return;
+            
+            const index = button.dataset.originalIndex;
             if (index === undefined || index < 0 || !products[index]) return;
             
             const product = products[index];
 
-            if (e.target.closest('.btn-edit')) {
+            if (button.classList.contains('btn-edit')) {
                 document.getElementById('modal-title').textContent = 'Editar Producto';
                 document.getElementById('prod-id').value = index;
                 document.getElementById('prod-codigo').value = product.codigo;
@@ -206,7 +229,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
                 openModal();
             }
-            if (e.target.closest('.btn-delete')) {
+            if (button.classList.contains('btn-delete')) {
                 showConfirmation(`¿Estás seguro de que quieres eliminar el producto "${product.nombre}"?`, () => {
                     products.splice(index, 1);
                     localStorage.setItem('products', JSON.stringify(products));
@@ -217,6 +240,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
         
+        // Función para cargar categorías en el filtro (sin cambios)
         const loadCategories = () => {
             const products = JSON.parse(localStorage.getItem('products')) || [];
             const categories = [...new Set(products.map(p => p.categoria).filter(Boolean))];
@@ -228,6 +252,7 @@ document.addEventListener('DOMContentLoaded', function() {
             categoryFilter.value = savedValue;
         };
         
+        // Event listeners para los filtros y carga inicial
         [searchInput, categoryFilter, stockFilter, sortBy].forEach(el => {
             el.addEventListener('change', displayProducts);
         });

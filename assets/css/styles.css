@@ -26,10 +26,15 @@
 @import 'pages/nosotros.css';
 
 /* 5. Estilos del Panel de Administración */
-@import 'admin/_admin.css';
+@import 'admin/_admin.css'; 
+@import 'admin/_card-admin.css'; 
+@import 'admin/_modal.css'; 
+@import 'admin/_botones-admin.css'; 
+@import 'admin/_filtros-admin.css'; 
+
+/* Estilos específicos por página de gestión */
 @import 'admin/_product-management.css';
 @import 'admin/_user-management.css';
-@import 'admin/_pedidos-management.css';
 
 
 

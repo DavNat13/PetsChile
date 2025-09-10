@@ -1,0 +1,34 @@
+/* =======================================
+   Admin: Botones de Acción Globales
+   ======================================= */
+.action-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.1em; /* Un poco más grandes para ser visibles */
+    margin: 0 5px;
+    padding: 5px;
+    border-radius: 4px;
+    transition: all 0.2s ease-in-out;
+}
+
+.action-btn:hover {
+    background-color: rgba(0, 0, 0, 0.08); /* Fondo sutil al pasar el ratón */
+    transform: translateY(-1px); /* Pequeño efecto de levantamiento */
+}
+
+.btn-view {
+    color: #007bff; /* Azul para ver/editar */
+}
+
+.btn-delete {
+    color: #dc3545; /* Rojo para eliminar */
+}
+
+.btn-view:hover {
+    color: #0056b3; /* Azul más oscuro al pasar el ratón */
+}
+
+.btn-delete:hover {
+    color: #c82333; /* Rojo más oscuro al pasar el ratón */
+}

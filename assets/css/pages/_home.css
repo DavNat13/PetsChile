@@ -10,10 +10,15 @@
 
 /* --- Hero Section --- */
 .hero-tienda {
+    background-color: #fff;
     display: flex;
     align-items: center;
+    flex-wrap: wrap;
+    padding: 3rem;
+    border-radius: 16px;
     justify-content: space-between;
     gap: 3rem;
+
     flex-wrap: wrap-reverse; /* Para que en móvil la imagen quede arriba */
     margin-bottom: 5rem;
 }

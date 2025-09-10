@@ -19,7 +19,7 @@ const blogPosts = [
             <p>Muchos juguetes están diseñados específicamente para limpiar los dientes y masajear las encías mientras tu mascota mastica. Esto ayuda a prevenir la acumulación de sarro y mantiene su salud bucal en óptimas condiciones.</p>
             <p>En Pets Chile, contamos con una amplia variedad de juguetes interactivos diseñados para cada tipo de mascota. ¡Visita nuestra sección de <a href="/productos.html">Juguetes</a> y encuentra el ideal para tu amigo!</p>
         `,
-        image: "blog-image-1.jpg",
+        image: "Juguetes-blog.jpg",
         author: "Equipo de Pets Chile",
         date: "7 de Septiembre, 2025"
     },
@@ -45,7 +45,7 @@ const blogPosts = [
             <p>¿Tu perro tiene la piel sensible? ¿Es propenso a alergias? ¿Necesita controlar su peso? Existen dietas formuladas específicamente para abordar estas y otras condiciones de salud. Si tienes dudas, la mejor opción es siempre consultar con tu veterinario.</p>
             <p>Invertir en un buen alimento es invertir en la salud y felicidad a largo plazo de tu perro. En nuestra tienda encontrarás una selección curada de los mejores alimentos para cada necesidad.</p>
         `,
-        image: "blog-image-2.jpg",
+        image: "alimento-mascota-blog.jpg",
         author: "Dr. Ana, Veterinaria",
         date: "1 de Septiembre, 2025"
     },
@@ -64,8 +64,8 @@ const blogPosts = [
                 <li>Considera añadir alimentos húmedos a su dieta, ya que contienen un alto porcentaje de agua.</li>
             </ul>
         `,
-        image: "blog-image-3.jpg",
-        author: "Equipo de Pets Chile",
+        image: "hidratacion-blog.jpg",
+        author: "Equipo de Pets Chile", 
         date: "8 de Septiembre, 2025"
     }
 ];

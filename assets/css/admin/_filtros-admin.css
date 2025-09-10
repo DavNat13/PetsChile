@@ -1,0 +1,57 @@
+/* =======================================
+   Admin: Barra de Controles (Filtros y Búsqueda)
+   ======================================= */
+
+.controls-bar {
+    /* Propiedades de layout (flexbox) */
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    align-items: center;
+    justify-content: space-between;
+
+    /* Propiedades de tarjeta (añadidas para el nuevo diseño) */
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+    padding: 1.5rem; /* Padding ajustado para una barra de controles */
+    border: 1px solid var(--border-color);
+    margin-bottom: 2rem;
+}
+
+.search-bar {
+    position: relative;
+    flex-grow: 1; /* Permite que la barra de búsqueda crezca */
+    min-width: 250px;
+}
+
+.search-bar input {
+    width: 100%;
+    padding: 10px 15px 10px 40px;
+    border: 1.5px solid var(--border-color);
+    border-radius: 25px;
+    font-size: 0.95rem;
+}
+
+.search-bar i {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #aaa;
+}
+
+.filters {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+/* Estilo para los selectores desplegables */
+.custom-select-wrapper select {
+    padding: 10px 15px;
+    border: 1.5px solid var(--border-color);
+    border-radius: 8px;
+    background-color: #fff;
+    font-size: 0.95rem;
+}

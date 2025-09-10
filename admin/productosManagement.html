@@ -17,9 +17,10 @@
             <nav class="sidebar-nav">
                 <ul>
                     <li><a href="dashboard.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
-                    <li class="nav-item-productos"><a href="productosManagement.html"><i class="fas fa-box-open"></i> Productos</a></li>
+                    <li><a href="productosManagement.html"><i class="fas fa-box-open"></i> Productos</a></li>
                     <li class="nav-item-usuarios"><a href="usuariosManagement.html"><i class="fas fa-users"></i> Usuarios</a></li>
-                    <li class="nav-item-ordenes"><a href="pedidosManagement.html"><i class="fas fa-receipt"></i> Pedidos</a></li>
+                    <li><a href="pedidosManagement.html"><i class="fas fa-receipt"></i> Pedidos</a></li>
+                    <li><a href="solicitudesManagement.html"><i class="fas fa-envelope-open-text"></i> Solicitudes</a></li>
                     <li><a href="../index.html"><i class="fas fa-store"></i> Volver a la Tienda</a></li>
                 </ul>
             </nav>
@@ -31,62 +32,44 @@
                 <p>Busca, filtra, añade o edita los productos de tu inventario.</p>
             </header>
             
-            <div class="card-container">
-                <div class="controls-bar">
-                    <div class="search-bar">
-                        <input type="text" id="search-input" placeholder="Buscar por nombre o código...">
-                        <i class="fas fa-search"></i>
-                    </div>
-                    <div class="filters">
-                        <div class="custom-select-wrapper">
-                            <select id="category-filter">
-                                <option value="">Todas las categorías</option>
-                            </select>
-                        </div>
-                        <div class="custom-select-wrapper">
-                            <select id="stock-filter">
-                                <option value="">Todo el stock</option>
-                                <option value="low-stock">Stock bajo</option>
-                            </select>
-                        </div>
-                        <div class="custom-select-wrapper">
-                            <select id="sort-by">
-                                <option value="default">Ordenar por...</option>
-                                <option value="price-asc">Precio (Menor a Mayor)</option>
-                                <option value="price-desc">Precio (Mayor a Menor)</option>
-                                <option value="name-asc">Nombre (A-Z)</option>
-                                <option value="name-desc">Nombre (Z-A)</option>
-                            </select>
-                        </div>
-                    </div>
-                    <button id="add-product-btn" class="btn-submit">
-                        <i class="fas fa-plus"></i> Nuevo Producto
-                    </button>
+            <div class="controls-bar card-container">
+                <div class="search-bar">
+                    <input type="text" id="search-input" placeholder="Buscar por nombre o código...">
+                    <i class="fas fa-search"></i>
                 </div>
+                <div class="filters">
+                    <div class="custom-select-wrapper">
+                        <select id="category-filter">
+                            <option value="">Todas las categorías</option>
+                        </select>
+                    </div>
+                    <div class="custom-select-wrapper">
+                        <select id="stock-filter">
+                            <option value="">Todo el stock</option>
+                            <option value="low-stock">Stock bajo</option>
+                        </select>
+                    </div>
+                    <div class="custom-select-wrapper">
+                        <select id="sort-by">
+                            <option value="default">Ordenar por...</option>
+                            <option value="price-asc">Precio (Menor a Mayor)</option>
+                            <option value="price-desc">Precio (Mayor a Menor)</option>
+                            <option value="name-asc">Nombre (A-Z)</option>
+                            <option value="name-desc">Nombre (Z-A)</option>
+                        </select>
+                    </div>
+                </div>
+                <button id="add-product-btn" class="btn-submit">
+                    <i class="fas fa-plus"></i> Nuevo Producto
+                </button>
             </div>
 
-            <div class="card-container">
-                <h2>Listado de Productos</h2>
-                <div class="table-responsive">
-                    <table class="data-table">
-                        <thead>
-                            <tr>
-                                <th>Código</th>
-                                <th>Nombre</th>
-                                <th>Precio</th>
-                                <th>Stock</th>
-                                <th>Categoría</th>
-                                <th>Acciones</th>
-                            </tr>
-                        </thead>
-                        <tbody id="products-table-body"></tbody>
-                    </table>
+            <div class="management-grid" id="products-grid">
                 </div>
-            </div>
         </main>
     </div>
 
-    <div id="product-modal" class="modal-overlay" style="display: none;">
+    <div id="product-modal" class="modal-overlay">
         <div class="modal-content">
             <header class="modal-header">
                 <h2 id="modal-title">Añadir Nuevo Producto</h2>
@@ -110,7 +93,7 @@
                     <div class="form-row">
                         <div class="form-group">
                             <label for="prod-precio">Precio</label>
-                            <input type="number" id="prod-precio" required min="0" step="0.01">
+                            <input type="number" id="prod-precio" required min="0" step="1">
                         </div>
                         <div class="form-group">
                             <label for="prod-stock">Stock</label>
