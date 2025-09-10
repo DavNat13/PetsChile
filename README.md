@@ -11,6 +11,7 @@ PetsChile es una plataforma de comercio electrónico desarrollada como proyecto 
     * Productos
     * Usuarios
     * Pedidos
+    * Solicitudes
 * **Diseño Responsivo:** Interfaz adaptable a dispositivos de escritorio y móviles.
 
 ## Tecnologías Utilizadas
@@ -19,7 +20,7 @@ Este proyecto fue construido utilizando exclusivamente tecnologías Frontend est
 
 * HTML5
 * CSS3
-* JavaScript (Vanilla JS - ES6+)
+* JavaScript 
 * **Persistencia de datos:** Se utiliza el `localStorage` del navegador para simular una base de datos.
 
 ## Instalación y Uso
